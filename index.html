@@ -16,7 +16,6 @@
   --accent: #9a7b2d;
   --line: #e0d8c8;
   --line-dark: #c8bfb0;
-  --gold: #b8953f;
 }
 
 body {
@@ -28,18 +27,77 @@ body {
   overflow-x: hidden;
 }
 
-/* 流动背景 */
+/* 流动背景 - 纯CSS实现 */
 .flow-bg {
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
   z-index: -1;
+  overflow: hidden;
+}
+
+.flow-wave {
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  background: 
+    radial-gradient(ellipse at 30% 40%, rgba(154,123,45,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 60%, rgba(138,128,112,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(154,123,45,0.05) 0%, transparent 40%);
+  animation: flow 20s ease-in-out infinite;
+}
+
+.flow-wave:nth-child(2) {
+  animation-delay: -7s;
+  animation-duration: 25s;
+  opacity: 0.6;
+}
+
+.flow-wave:nth-child(3) {
+  animation-delay: -14s;
+  animation-duration: 30s;
   opacity: 0.4;
 }
 
-.flow-bg canvas {
+@keyframes flow {
+  0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+  25% { transform: translate(2%, 3%) rotate(1deg) scale(1.02); }
+  50% { transform: translate(-1%, 2%) rotate(-1deg) scale(0.98); }
+  75% { transform: translate(3%, -1%) rotate(0.5deg) scale(1.01); }
+}
+
+/* 麦浪线条 */
+.wheat-lines {
+  position: fixed;
+  top: 0; left: 0;
   width: 100%; height: 100%;
-  display: block;
+  z-index: -1;
+  opacity: 0.15;
+}
+
+.wheat-line {
+  position: absolute;
+  width: 200%;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    var(--accent) 20%, 
+    var(--accent) 80%, 
+    transparent 100%);
+  animation: wave 8s ease-in-out infinite;
+}
+
+.wheat-line:nth-child(1) { top: 20%; animation-delay: 0s; }
+.wheat-line:nth-child(2) { top: 35%; animation-delay: -2s; opacity: 0.7; }
+.wheat-line:nth-child(3) { top: 50%; animation-delay: -4s; opacity: 0.5; }
+.wheat-line:nth-child(4) { top: 65%; animation-delay: -1s; opacity: 0.8; }
+.wheat-line:nth-child(5) { top: 80%; animation-delay: -3s; opacity: 0.6; }
+
+@keyframes wave {
+  0%, 100% { transform: translateX(-5%) scaleY(1); opacity: 0.3; }
+  50% { transform: translateX(5%) scaleY(1.5); opacity: 0.8; }
 }
 
 .container {
@@ -302,7 +360,18 @@ footer .footer-note {
 
 <!-- 流动背景 -->
 <div class="flow-bg">
-  <canvas id="flowCanvas"></canvas>
+  <div class="flow-wave"></div>
+  <div class="flow-wave"></div>
+  <div class="flow-wave"></div>
+</div>
+
+<!-- 麦浪线条 -->
+<div class="wheat-lines">
+  <div class="wheat-line"></div>
+  <div class="wheat-line"></div>
+  <div class="wheat-line"></div>
+  <div class="wheat-line"></div>
+  <div class="wheat-line"></div>
 </div>
 
 <div class="container">
@@ -357,57 +426,6 @@ footer .footer-note {
 </footer>
 
 </div>
-
-<script>
-// 流动背景 - 像水波一样缓慢流动的线条
-(function() {
-  const canvas = document.getElementById('flowCanvas');
-  const ctx = canvas.getContext('2d');
-  
-  let w, h;
-  let time = 0;
-  
-  function resize() {
-    w = canvas.width = window.innerWidth;
-    h = canvas.height = window.innerHeight;
-  }
-  
-  window.addEventListener('resize', resize);
-  resize();
-  
-  // 生成流动的波浪线
-  function drawWave(yOffset, amplitude, frequency, speed, color, lineWidth) {
-    ctx.beginPath();
-    for (let x = 0; x <= w; x += 3) {
-      const y = yOffset + 
-        Math.sin(x * frequency + time * speed) * amplitude +
-        Math.sin(x * frequency * 0.5 + time * speed * 0.7) * amplitude * 0.5;
-      if (x === 0) ctx.moveTo(x, y);
-      else ctx.lineTo(x, y);
-    }
-    ctx.strokeStyle = color;
-    ctx.lineWidth = lineWidth;
-    ctx.stroke();
-  }
-  
-  function animate() {
-    ctx.clearRect(0, 0, w, h);
-    time += 0.008;
-    
-    // 多层波浪，营造流动感
-    drawWave(h * 0.3, 30, 0.003, 1, 'rgba(154, 123, 45, 0.06)', 1);
-    drawWave(h * 0.35, 40, 0.002, 0.8, 'rgba(154, 123, 45, 0.04)', 1.5);
-    drawWave(h * 0.5, 50, 0.0025, 0.6, 'rgba(138, 128, 112, 0.05)', 1);
-    drawWave(h * 0.55, 35, 0.003, 0.9, 'rgba(154, 123, 45, 0.03)', 2);
-    drawWave(h * 0.7, 45, 0.002, 0.7, 'rgba(138, 128, 112, 0.04)', 1);
-    drawWave(h * 0.75, 25, 0.004, 1.1, 'rgba(154, 123, 45, 0.05)', 1);
-    
-    requestAnimationFrame(animate);
-  }
-  
-  animate();
-})();
-</script>
 
 </body>
 </html>
