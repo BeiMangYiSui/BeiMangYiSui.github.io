@@ -15,6 +15,7 @@
   --dim: #8a8070;
   --accent: #9a7b2d;
   --line: #e0d8c8;
+  --line-dark: #c8bfb0;
 }
 
 body {
@@ -33,39 +34,44 @@ body {
 
 /* Header */
 header {
-  padding: 8rem 0 5rem;
+  padding: 7rem 0 4rem;
+  position: relative;
 }
 
 header .avatar {
-  width: 80px;
-  height: 80px;
+  width: 88px;
+  height: 88px;
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 2rem;
   display: block;
-  border: 2px solid var(--line);
+  border: 3px solid var(--line);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
 }
 
 header h1 {
-  font-size: 2rem;
+  font-size: 2.2rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
-  margin-bottom: 0.5rem;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.4rem;
   color: var(--fg);
 }
 
 header .bio {
-  font-size: 1rem;
+  font-size: 1.05rem;
   color: var(--dim);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.8rem;
 }
 
 header .role {
   display: inline-block;
-  margin-top: 1.2rem;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--accent);
-  letter-spacing: 0.2em;
+  letter-spacing: 0.25em;
+  padding: 0.3em 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 
 /* Divider */
@@ -83,8 +89,15 @@ hr {
   font-size: 0.75rem;
   font-weight: 400;
   color: var(--dim);
-  letter-spacing: 0.25em;
+  letter-spacing: 0.3em;
+  margin-bottom: 0.8rem;
+}
+
+.works .works-sub {
+  font-size: 0.85rem;
+  color: var(--dim);
   margin-bottom: 2.5rem;
+  opacity: 0.7;
 }
 
 .work-card {
@@ -94,11 +107,13 @@ hr {
   background: var(--card);
   border: 1px solid var(--line);
   overflow: hidden;
-  transition: border-color 0.3s;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  margin-bottom: 2rem;
 }
 
 .work-card:hover {
-  border-color: #c8bfb0;
+  border-color: var(--line-dark);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
 }
 
 .work-card img {
@@ -115,35 +130,67 @@ hr {
 }
 
 .work-card .work-body {
-  padding: 1.5rem;
+  padding: 1.8rem;
 }
 
 .work-card .work-title {
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   font-weight: 600;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.03em;
 }
 
 .work-card .work-title .status {
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 400;
   color: var(--accent);
   margin-left: 0.6rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.15em;
+  border: 1px solid var(--accent);
+  padding: 0.15em 0.5em;
+  vertical-align: middle;
+  opacity: 0.8;
 }
 
 .work-card .work-desc {
   font-size: 0.88rem;
   color: var(--dim);
-  line-height: 1.7;
+  line-height: 1.8;
+  margin-bottom: 0.8rem;
+}
+
+.work-card .work-meta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.75rem;
+  color: var(--dim);
+  opacity: 0.7;
+  margin-bottom: 0.8rem;
 }
 
 .work-card .work-link {
   display: inline-block;
-  margin-top: 0.8rem;
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   color: var(--accent);
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.work-card:hover .work-link {
+  border-bottom-color: var(--accent);
+}
+
+/* About */
+.about {
+  padding: 3rem 0;
+}
+
+.about p {
+  font-size: 0.92rem;
+  color: var(--dim);
+  line-height: 2;
+  max-width: 480px;
 }
 
 /* Contact */
@@ -155,7 +202,7 @@ hr {
   font-size: 0.75rem;
   font-weight: 400;
   color: var(--dim);
-  letter-spacing: 0.25em;
+  letter-spacing: 0.3em;
   margin-bottom: 1.5rem;
 }
 
@@ -163,14 +210,15 @@ hr {
   color: var(--fg);
   text-decoration: none;
   font-size: 0.9rem;
-  margin-right: 2rem;
+  margin-right: 2.5rem;
   border-bottom: 1px solid var(--line);
   padding-bottom: 2px;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, color 0.2s;
 }
 
 .contact a:hover {
   border-color: var(--fg);
+  color: var(--accent);
 }
 
 /* Footer */
@@ -178,12 +226,21 @@ footer {
   padding: 2rem 0;
   font-size: 0.7rem;
   color: #b0a890;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+footer .footer-note {
+  opacity: 0.6;
 }
 
 @media (max-width: 600px) {
-  header { padding: 5rem 0 3.5rem; }
+  header { padding: 4.5rem 0 3rem; }
+  header h1 { font-size: 1.8rem; }
   .works { padding: 3rem 0; }
+  footer { flex-direction: column; gap: 0.5rem; text-align: center; }
 }
 </style>
 </head>
@@ -201,17 +258,29 @@ footer {
 
 <section class="works">
   <h2>作品</h2>
+  <p class="works-sub">一个人做的游戏，慢慢做，慢慢改。</p>
 
   <a class="work-card" href="./qin-mie-liu-guo-demo/" target="_blank">
     <img src="cover-qin.webp" alt="秦灭六国">
     <div class="work-body">
       <div class="work-title">秦灭六国 <span class="status">DEMO</span></div>
       <p class="work-desc">历史已定，抉择在你。扮演秦军秘密行动头领北芒，与医者小满、剑士青翎共历战国末年。无等级、无装备、无刷怪——你决定的是方法与代价。</p>
-      <span class="work-link">浏览器即玩 →</span>
+      <div class="work-meta">
+        <span>叙事 RPG</span>
+        <span>约 70 分钟</span>
+        <span>浏览器即玩</span>
+      </div>
+      <span class="work-link">开始试玩 →</span>
     </div>
   </a>
 
   <!-- 未来作品加在这里 -->
+</section>
+
+<hr>
+
+<section class="about">
+  <p>北邙一穗，取"北邙无闲土"之意。白天写代码，晚上写故事。相信好的游戏不需要堆砌系统，一个让人记住的选择，比一百个装备栏更有分量。</p>
 </section>
 
 <hr>
@@ -223,7 +292,8 @@ footer {
 </section>
 
 <footer>
-  © 2026 北邙一穗
+  <span>© 2026 北邙一穗</span>
+  <span class="footer-note">手工制作，无模板</span>
 </footer>
 
 </div>
