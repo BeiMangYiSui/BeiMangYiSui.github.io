@@ -9,104 +9,141 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --bg: #111;
-  --fg: #ddd;
-  --dim: #777;
-  --accent: #c9a84c;
-  --line: #2a2a2a;
+  --bg: #0e0e0e;
+  --card: #161616;
+  --fg: #e0dcd5;
+  --dim: #8a8578;
+  --accent: #b8953f;
+  --line: #222;
 }
 
 body {
-  font-family: -apple-system, 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  font-family: Georgia, 'Noto Serif SC', 'Songti SC', serif;
   background: var(--bg);
   color: var(--fg);
-  line-height: 1.7;
+  line-height: 1.75;
   -webkit-font-smoothing: antialiased;
 }
 
 .container {
-  max-width: 680px;
+  max-width: 640px;
   margin: 0 auto;
   padding: 0 1.5rem;
 }
 
 /* Header */
 header {
-  padding: 6rem 0 4rem;
+  padding: 8rem 0 5rem;
 }
 
 header .avatar {
-  width: 72px;
-  height: 72px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   object-fit: cover;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   display: block;
+  border: 2px solid var(--line);
 }
 
 header h1 {
-  font-size: 1.75rem;
+  font-size: 2rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
-  margin-bottom: 0.25rem;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+  color: var(--fg);
 }
 
 header .bio {
-  font-size: 0.95rem;
+  font-size: 1rem;
   color: var(--dim);
+  letter-spacing: 0.05em;
+}
+
+header .role {
+  display: inline-block;
+  margin-top: 1.2rem;
+  font-size: 0.8rem;
+  color: var(--accent);
+  letter-spacing: 0.2em;
 }
 
 /* Divider */
 hr {
   border: none;
   border-top: 1px solid var(--line);
-  margin: 0;
 }
 
 /* Works */
 .works {
-  padding: 3rem 0;
+  padding: 4rem 0;
 }
 
 .works h2 {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 400;
   color: var(--dim);
-  letter-spacing: 0.15em;
-  margin-bottom: 2rem;
+  letter-spacing: 0.25em;
+  margin-bottom: 2.5rem;
 }
 
-.work-item {
+.work-card {
   display: block;
   text-decoration: none;
   color: inherit;
-  padding: 1.5rem 0;
-  border-bottom: 1px solid var(--line);
-  transition: opacity 0.2s;
+  background: var(--card);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  transition: border-color 0.3s;
 }
 
-.work-item:hover {
-  opacity: 0.7;
+.work-card:hover {
+  border-color: #333;
 }
 
-.work-item .work-title {
-  font-size: 1.15rem;
+.work-card img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.9);
+  transition: filter 0.3s;
+}
+
+.work-card:hover img {
+  filter: brightness(1);
+}
+
+.work-card .work-body {
+  padding: 1.5rem;
+}
+
+.work-card .work-title {
+  font-size: 1.2rem;
   font-weight: 600;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.4rem;
 }
 
-.work-item .work-title .status {
+.work-card .work-title .status {
   font-size: 0.7rem;
   font-weight: 400;
   color: var(--accent);
-  margin-left: 0.5rem;
-  vertical-align: middle;
+  margin-left: 0.6rem;
+  letter-spacing: 0.1em;
 }
 
-.work-item .work-desc {
-  font-size: 0.9rem;
+.work-card .work-desc {
+  font-size: 0.88rem;
   color: var(--dim);
-  line-height: 1.6;
+  line-height: 1.7;
+}
+
+.work-card .work-link {
+  display: inline-block;
+  margin-top: 0.8rem;
+  font-size: 0.8rem;
+  color: var(--accent);
+  letter-spacing: 0.1em;
 }
 
 /* Contact */
@@ -115,10 +152,10 @@ hr {
 }
 
 .contact h2 {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 400;
   color: var(--dim);
-  letter-spacing: 0.15em;
+  letter-spacing: 0.25em;
   margin-bottom: 1.5rem;
 }
 
@@ -128,7 +165,7 @@ hr {
   font-size: 0.9rem;
   margin-right: 2rem;
   border-bottom: 1px solid var(--line);
-  padding-bottom: 1px;
+  padding-bottom: 2px;
   transition: border-color 0.2s;
 }
 
@@ -139,12 +176,14 @@ hr {
 /* Footer */
 footer {
   padding: 2rem 0;
-  font-size: 0.75rem;
-  color: #444;
+  font-size: 0.7rem;
+  color: #3a3a3a;
+  letter-spacing: 0.1em;
 }
 
 @media (max-width: 600px) {
-  header { padding: 4rem 0 3rem; }
+  header { padding: 5rem 0 3.5rem; }
+  .works { padding: 3rem 0; }
 }
 </style>
 </head>
@@ -155,6 +194,7 @@ footer {
   <img class="avatar" src="avatar.jpg" alt="北邙一穗">
   <h1>北邙一穗</h1>
   <p class="bio">北邙无闲土，麦田有故人。</p>
+  <span class="role">做游戏的人</span>
 </header>
 
 <hr>
@@ -162,9 +202,13 @@ footer {
 <section class="works">
   <h2>作品</h2>
 
-  <a class="work-item" href="./qin-mie-liu-guo-demo/" target="_blank">
-    <div class="work-title">秦灭六国 <span class="status">Demo</span></div>
-    <div class="work-desc">历史已定，抉择在你。扮演秦军秘密行动头领北芒，与医者小满、剑士青翎共历战国末年。无等级、无装备、无刷怪——你决定的是方法与代价。浏览器即玩。</div>
+  <a class="work-card" href="./qin-mie-liu-guo-demo/" target="_blank">
+    <img src="cover-qin.webp" alt="秦灭六国">
+    <div class="work-body">
+      <div class="work-title">秦灭六国 <span class="status">DEMO</span></div>
+      <p class="work-desc">历史已定，抉择在你。扮演秦军秘密行动头领北芒，与医者小满、剑士青翎共历战国末年。无等级、无装备、无刷怪——你决定的是方法与代价。</p>
+      <span class="work-link">浏览器即玩 →</span>
+    </div>
   </a>
 
   <!-- 未来作品加在这里 -->
@@ -173,7 +217,7 @@ footer {
 <hr>
 
 <section class="contact">
-  <h2>联系</h2>
+  <h2>找到我</h2>
   <a href="https://t.me/BEIMANGYISUI" target="_blank" rel="noopener">Telegram</a>
   <a href="https://github.com/shixiaofei-sunny" target="_blank" rel="noopener">GitHub</a>
 </section>
