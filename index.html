@@ -16,6 +16,7 @@
   --accent: #9a7b2d;
   --line: #e0d8c8;
   --line-dark: #c8bfb0;
+  --gold: #b8953f;
 }
 
 body {
@@ -24,12 +25,29 @@ body {
   color: var(--fg);
   line-height: 1.75;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* 流动背景 */
+.flow-bg {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: -1;
+  opacity: 0.4;
+}
+
+.flow-bg canvas {
+  width: 100%; height: 100%;
+  display: block;
 }
 
 .container {
   max-width: 640px;
   margin: 0 auto;
   padding: 0 1.5rem;
+  position: relative;
+  z-index: 1;
 }
 
 /* Header */
@@ -47,6 +65,9 @@ header .avatar {
   display: block;
   border: 3px solid var(--line);
   box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: rise 1s ease 0.2s forwards;
 }
 
 header h1 {
@@ -55,6 +76,9 @@ header h1 {
   letter-spacing: 0.1em;
   margin-bottom: 0.4rem;
   color: var(--fg);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: rise 1s ease 0.4s forwards;
 }
 
 header .bio {
@@ -62,6 +86,9 @@ header .bio {
   color: var(--dim);
   letter-spacing: 0.06em;
   margin-bottom: 0.8rem;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: rise 1s ease 0.6s forwards;
 }
 
 header .role {
@@ -72,12 +99,25 @@ header .role {
   padding: 0.3em 0;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: rise 1s ease 0.8s forwards;
+}
+
+@keyframes rise {
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Divider */
 hr {
   border: none;
   border-top: 1px solid var(--line);
+  opacity: 0;
+  animation: fadeIn 1s ease 1s forwards;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
 }
 
 /* Works */
@@ -91,13 +131,16 @@ hr {
   color: var(--dim);
   letter-spacing: 0.3em;
   margin-bottom: 0.8rem;
+  opacity: 0;
+  animation: fadeIn 1s ease 1.2s forwards;
 }
 
 .works .works-sub {
   font-size: 0.85rem;
   color: var(--dim);
   margin-bottom: 2.5rem;
-  opacity: 0.7;
+  opacity: 0;
+  animation: fadeIn 1s ease 1.4s forwards;
 }
 
 .work-card {
@@ -107,13 +150,17 @@ hr {
   background: var(--card);
   border: 1px solid var(--line);
   overflow: hidden;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  transition: border-color 0.4s, box-shadow 0.4s, transform 0.4s;
   margin-bottom: 2rem;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: rise 1s ease 1.6s forwards;
 }
 
 .work-card:hover {
   border-color: var(--line-dark);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+  transform: translateY(-4px);
 }
 
 .work-card img {
@@ -121,12 +168,13 @@ hr {
   aspect-ratio: 16/9;
   object-fit: cover;
   display: block;
-  filter: brightness(0.95);
-  transition: filter 0.3s;
+  filter: brightness(0.95) saturate(0.9);
+  transition: filter 0.5s, transform 0.5s;
 }
 
 .work-card:hover img {
-  filter: brightness(1);
+  filter: brightness(1) saturate(1);
+  transform: scale(1.02);
 }
 
 .work-card .work-body {
@@ -174,7 +222,7 @@ hr {
   color: var(--accent);
   letter-spacing: 0.12em;
   border-bottom: 1px solid transparent;
-  transition: border-color 0.2s;
+  transition: border-color 0.3s;
 }
 
 .work-card:hover .work-link {
@@ -184,6 +232,8 @@ hr {
 /* About */
 .about {
   padding: 3rem 0;
+  opacity: 0;
+  animation: fadeIn 1s ease 2s forwards;
 }
 
 .about p {
@@ -196,6 +246,8 @@ hr {
 /* Contact */
 .contact {
   padding: 3rem 0 6rem;
+  opacity: 0;
+  animation: fadeIn 1s ease 2.2s forwards;
 }
 
 .contact h2 {
@@ -213,7 +265,7 @@ hr {
   margin-right: 2.5rem;
   border-bottom: 1px solid var(--line);
   padding-bottom: 2px;
-  transition: border-color 0.2s, color 0.2s;
+  transition: border-color 0.3s, color 0.3s;
 }
 
 .contact a:hover {
@@ -230,6 +282,8 @@ footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  opacity: 0;
+  animation: fadeIn 1s ease 2.4s forwards;
 }
 
 footer .footer-note {
@@ -245,13 +299,19 @@ footer .footer-note {
 </style>
 </head>
 <body>
+
+<!-- 流动背景 -->
+<div class="flow-bg">
+  <canvas id="flowCanvas"></canvas>
+</div>
+
 <div class="container">
 
 <header>
   <img class="avatar" src="avatar.jpg" alt="北邙一穗">
   <h1>北邙一穗</h1>
   <p class="bio">北邙无闲土，麦田有故人。</p>
-  <span class="role">做游戏的人</span>
+  <span class="role">一个热爱历史的人</span>
 </header>
 
 <hr>
@@ -297,5 +357,57 @@ footer .footer-note {
 </footer>
 
 </div>
+
+<script>
+// 流动背景 - 像水波一样缓慢流动的线条
+(function() {
+  const canvas = document.getElementById('flowCanvas');
+  const ctx = canvas.getContext('2d');
+  
+  let w, h;
+  let time = 0;
+  
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+  
+  window.addEventListener('resize', resize);
+  resize();
+  
+  // 生成流动的波浪线
+  function drawWave(yOffset, amplitude, frequency, speed, color, lineWidth) {
+    ctx.beginPath();
+    for (let x = 0; x <= w; x += 3) {
+      const y = yOffset + 
+        Math.sin(x * frequency + time * speed) * amplitude +
+        Math.sin(x * frequency * 0.5 + time * speed * 0.7) * amplitude * 0.5;
+      if (x === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = color;
+    ctx.lineWidth = lineWidth;
+    ctx.stroke();
+  }
+  
+  function animate() {
+    ctx.clearRect(0, 0, w, h);
+    time += 0.008;
+    
+    // 多层波浪，营造流动感
+    drawWave(h * 0.3, 30, 0.003, 1, 'rgba(154, 123, 45, 0.06)', 1);
+    drawWave(h * 0.35, 40, 0.002, 0.8, 'rgba(154, 123, 45, 0.04)', 1.5);
+    drawWave(h * 0.5, 50, 0.0025, 0.6, 'rgba(138, 128, 112, 0.05)', 1);
+    drawWave(h * 0.55, 35, 0.003, 0.9, 'rgba(154, 123, 45, 0.03)', 2);
+    drawWave(h * 0.7, 45, 0.002, 0.7, 'rgba(138, 128, 112, 0.04)', 1);
+    drawWave(h * 0.75, 25, 0.004, 1.1, 'rgba(154, 123, 45, 0.05)', 1);
+    
+    requestAnimationFrame(animate);
+  }
+  
+  animate();
+})();
+</script>
+
 </body>
 </html>
