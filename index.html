@@ -3,465 +3,185 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>北邙一穗 · 独立游戏开发者</title>
-<meta name="description" content="北邙无闲土，麦田有故人。独立游戏开发者作品集。">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+<title>北邙一穗</title>
+<meta name="description" content="北邙无闲土，麦田有故人。">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --wheat: #c9a84c;
-  --wheat-light: #e8d48b;
-  --wheat-dim: #8b7332;
-  --earth: #1a1610;
-  --earth-mid: #2a2318;
-  --earth-light: #3d3425;
-  --parchment: #f0e6d0;
-  --parchment-dim: #a89878;
-  --ink: #0d0b08;
+  --bg: #111;
+  --fg: #ddd;
+  --dim: #777;
+  --accent: #c9a84c;
+  --line: #2a2a2a;
 }
-
-html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'Noto Serif SC', serif;
-  background: var(--earth);
-  color: var(--parchment);
-  min-height: 100vh;
-  overflow-x: hidden;
-  line-height: 1.8;
+  font-family: -apple-system, 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Ambient grain texture overlay */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 9999;
+.container {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
 }
 
-/* Hero section */
-.hero {
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 4rem 2rem;
-  overflow: hidden;
+/* Header */
+header {
+  padding: 6rem 0 4rem;
 }
 
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  background: url('avatar.jpg') center/cover no-repeat;
-  filter: brightness(0.3) saturate(0.7);
-  transform: scale(1.05);
-  animation: heroBreath 20s ease-in-out infinite alternate;
-}
-
-@keyframes heroBreath {
-  from { transform: scale(1.05); }
-  to { transform: scale(1.12); }
-}
-
-.hero-bg::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(26, 22, 16, 0.4) 0%,
-    rgba(26, 22, 16, 0.6) 50%,
-    rgba(26, 22, 16, 0.95) 100%
-  );
-}
-
-.hero-content {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  animation: fadeUp 1.2s ease-out;
-}
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.avatar-frame {
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  margin: 0 auto 2rem;
-  position: relative;
-  animation: float 6s ease-in-out infinite;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-
-.avatar-frame::before {
-  content: '';
-  position: absolute;
-  inset: -4px;
-  border-radius: 50%;
-  background: conic-gradient(from 0deg, var(--wheat), var(--wheat-dim), var(--wheat-light), var(--wheat));
-  animation: spin 8s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-.avatar-frame img {
-  width: 100%;
-  height: 100%;
+header .avatar {
+  width: 72px;
+  height: 72px;
   border-radius: 50%;
   object-fit: cover;
-  position: relative;
-  z-index: 1;
-  border: 3px solid var(--earth);
-}
-
-.hero-name {
-  font-family: 'ZCOOL XiaoWei', serif;
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
-  color: var(--wheat-light);
-  letter-spacing: 0.15em;
-  margin-bottom: 0.5rem;
-  text-shadow: 0 2px 20px rgba(201, 168, 76, 0.3);
-}
-
-.hero-bio {
-  font-size: clamp(1rem, 2.5vw, 1.3rem);
-  color: var(--parchment-dim);
-  letter-spacing: 0.3em;
-  font-style: italic;
-  margin-bottom: 2.5rem;
-}
-
-.hero-tagline {
-  font-size: 0.85rem;
-  color: var(--wheat-dim);
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  border: 1px solid var(--wheat-dim);
-  padding: 0.4em 1.5em;
-  display: inline-block;
-}
-
-.scroll-hint {
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-  animation: bounce 2s ease-in-out infinite;
-  color: var(--wheat-dim);
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
-  text-align: center;
-}
-
-.scroll-hint::after {
-  content: '';
+  margin-bottom: 1.5rem;
   display: block;
-  width: 1px;
-  height: 30px;
-  background: linear-gradient(to bottom, var(--wheat-dim), transparent);
-  margin: 0.5rem auto 0;
 }
 
-@keyframes bounce {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(8px); }
+header h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
 }
 
-/* Works section */
+header .bio {
+  font-size: 0.95rem;
+  color: var(--dim);
+}
+
+/* Divider */
+hr {
+  border: none;
+  border-top: 1px solid var(--line);
+  margin: 0;
+}
+
+/* Works */
 .works {
-  padding: 6rem 2rem;
-  max-width: 1100px;
-  margin: 0 auto;
+  padding: 3rem 0;
 }
 
-.section-label {
-  font-size: 0.75rem;
-  letter-spacing: 0.4em;
-  color: var(--wheat-dim);
-  text-transform: uppercase;
-  margin-bottom: 1rem;
-  padding-left: 0.5rem;
-  border-left: 2px solid var(--wheat-dim);
+.works h2 {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--dim);
+  letter-spacing: 0.15em;
+  margin-bottom: 2rem;
 }
 
-.section-title {
-  font-family: 'ZCOOL XiaoWei', serif;
-  font-size: clamp(1.8rem, 4vw, 2.8rem);
-  color: var(--parchment);
-  margin-bottom: 3rem;
-}
-
-.game-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 2rem;
-}
-
-.game-card {
-  position: relative;
-  background: var(--earth-mid);
-  border: 1px solid var(--earth-light);
-  border-radius: 2px;
-  overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  cursor: pointer;
+.work-item {
+  display: block;
   text-decoration: none;
   color: inherit;
-  display: block;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--line);
+  transition: opacity 0.2s;
 }
 
-.game-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--wheat-dim);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px var(--wheat-dim);
+.work-item:hover {
+  opacity: 0.7;
 }
 
-.game-card-cover {
-  width: 100%;
-  aspect-ratio: 16/9;
-  object-fit: cover;
-  transition: transform 0.6s ease;
-  filter: brightness(0.85);
+.work-item .work-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
 }
 
-.game-card:hover .game-card-cover {
-  transform: scale(1.05);
-  filter: brightness(1);
-}
-
-.game-card-body {
-  padding: 1.5rem;
-}
-
-.game-card-title {
-  font-family: 'ZCOOL XiaoWei', serif;
-  font-size: 1.4rem;
-  color: var(--wheat-light);
-  margin-bottom: 0.5rem;
-}
-
-.game-card-desc {
-  font-size: 0.9rem;
-  color: var(--parchment-dim);
-  line-height: 1.6;
-  margin-bottom: 1rem;
-}
-
-.game-card-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.game-card-tag {
+.work-item .work-title .status {
   font-size: 0.7rem;
-  letter-spacing: 0.1em;
-  color: var(--wheat-dim);
-  border: 1px solid var(--earth-light);
-  padding: 0.2em 0.7em;
-  border-radius: 1px;
+  font-weight: 400;
+  color: var(--accent);
+  margin-left: 0.5rem;
+  vertical-align: middle;
 }
 
-.game-card-status {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  font-size: 0.65rem;
-  letter-spacing: 0.15em;
-  padding: 0.3em 0.8em;
-  background: rgba(26, 22, 16, 0.85);
-  border: 1px solid var(--wheat-dim);
-  color: var(--wheat);
-  backdrop-filter: blur(4px);
+.work-item .work-desc {
+  font-size: 0.9rem;
+  color: var(--dim);
+  line-height: 1.6;
 }
 
-.game-card-play {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4em;
-  font-size: 0.8rem;
-  color: var(--wheat);
-  letter-spacing: 0.1em;
-  margin-top: 0.8rem;
-  transition: gap 0.3s ease;
-}
-
-.game-card:hover .game-card-play {
-  gap: 0.8em;
-}
-
-/* Contact section */
+/* Contact */
 .contact {
-  padding: 4rem 2rem 6rem;
-  max-width: 1100px;
-  margin: 0 auto;
-  text-align: center;
+  padding: 3rem 0 6rem;
 }
 
-.contact-links {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  flex-wrap: wrap;
-  margin-top: 2rem;
+.contact h2 {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--dim);
+  letter-spacing: 0.15em;
+  margin-bottom: 1.5rem;
 }
 
-.contact-link {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--parchment-dim);
+.contact a {
+  color: var(--fg);
   text-decoration: none;
   font-size: 0.9rem;
-  letter-spacing: 0.1em;
-  padding: 0.6em 1.2em;
-  border: 1px solid var(--earth-light);
-  transition: all 0.3s ease;
+  margin-right: 2rem;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 1px;
+  transition: border-color 0.2s;
 }
 
-.contact-link:hover {
-  color: var(--wheat);
-  border-color: var(--wheat-dim);
-  background: rgba(201, 168, 76, 0.05);
-}
-
-.contact-link svg {
-  width: 18px;
-  height: 18px;
+.contact a:hover {
+  border-color: var(--fg);
 }
 
 /* Footer */
 footer {
-  text-align: center;
-  padding: 2rem;
-  font-size: 0.7rem;
-  color: var(--earth-light);
-  letter-spacing: 0.2em;
-  border-top: 1px solid var(--earth-light);
+  padding: 2rem 0;
+  font-size: 0.75rem;
+  color: #444;
 }
 
-/* Scroll reveal */
-.reveal {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Responsive */
 @media (max-width: 600px) {
-  .game-grid { grid-template-columns: 1fr; }
-  .hero { padding: 3rem 1.5rem; }
-  .works { padding: 4rem 1.5rem; }
+  header { padding: 4rem 0 3rem; }
 }
 </style>
 </head>
 <body>
+<div class="container">
 
-<section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-content">
-    <div class="avatar-frame">
-      <img src="avatar.jpg" alt="北邙一穗">
-    </div>
-    <h1 class="hero-name">北邙一穗</h1>
-    <p class="hero-bio">北邙无闲土，麦田有故人。</p>
-    <span class="hero-tagline">独立游戏开发者</span>
-  </div>
-  <div class="scroll-hint">作品</div>
-</section>
+<header>
+  <img class="avatar" src="avatar.jpg" alt="北邙一穗">
+  <h1>北邙一穗</h1>
+  <p class="bio">北邙无闲土，麦田有故人。</p>
+</header>
+
+<hr>
 
 <section class="works">
-  <div class="reveal">
-    <p class="section-label">作品集</p>
-    <h2 class="section-title">游戏</h2>
-  </div>
+  <h2>作品</h2>
 
-  <div class="game-grid">
-    <a href="./qin-mie-liu-guo-demo/" class="game-card reveal" target="_blank">
-      <img class="game-card-cover" src="https://raw.githubusercontent.com/shixiaofei-sunny/qin-mie-liu-guo-demo/main/public/assets/bg_xinzheng.webp" alt="秦灭六国">
-      <span class="game-card-status">DEMO 可玩</span>
-      <div class="game-card-body">
-        <h3 class="game-card-title">秦灭六国</h3>
-        <p class="game-card-desc">历史已定，抉择在你。扮演秦军秘密行动头领北芒，与医者小满、剑士青翎共历战国末年的血与火。无等级、无装备、无刷怪——你决定的是方法与代价。</p>
-        <div class="game-card-tags">
-          <span class="game-card-tag">叙事RPG</span>
-          <span class="game-card-tag">战国</span>
-          <span class="game-card-tag">多分支</span>
-          <span class="game-card-tag">浏览器即玩</span>
-        </div>
-        <span class="game-card-play">立即试玩 →</span>
-      </div>
-    </a>
+  <a class="work-item" href="./qin-mie-liu-guo-demo/" target="_blank">
+    <div class="work-title">秦灭六国 <span class="status">Demo</span></div>
+    <div class="work-desc">历史已定，抉择在你。扮演秦军秘密行动头领北芒，与医者小满、剑士青翎共历战国末年。无等级、无装备、无刷怪——你决定的是方法与代价。浏览器即玩。</div>
+  </a>
 
-    <!-- 未来游戏卡片模板 -->
-    <!--
-    <a href="./game-2/" class="game-card reveal">
-      <img class="game-card-cover" src="cover2.jpg" alt="游戏2">
-      <span class="game-card-status">开发中</span>
-      <div class="game-card-body">
-        <h3 class="game-card-title">游戏名称</h3>
-        <p class="game-card-desc">一句话介绍</p>
-        <div class="game-card-tags">
-          <span class="game-card-tag">类型</span>
-        </div>
-        <span class="game-card-play">了解更多 →</span>
-      </div>
-    </a>
-    -->
-  </div>
+  <!-- 未来作品加在这里 -->
 </section>
 
-<section class="contact reveal">
-  <p class="section-label" style="text-align:center; border-left:none; border-bottom: 1px solid var(--earth-light); display:inline-block; padding-bottom:0.3em;">联系</p>
-  <div class="contact-links">
-    <a href="https://t.me/BEIMANGYISUI" class="contact-link" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>
-      Telegram
-    </a>
-    <a href="https://github.com/shixiaofei-sunny" class="contact-link" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-      GitHub
-    </a>
-  </div>
+<hr>
+
+<section class="contact">
+  <h2>联系</h2>
+  <a href="https://t.me/BEIMANGYISUI" target="_blank" rel="noopener">Telegram</a>
+  <a href="https://github.com/shixiaofei-sunny" target="_blank" rel="noopener">GitHub</a>
 </section>
 
 <footer>
-  © 2026 北邙一穗 · 独立游戏开发
+  © 2026 北邙一穗
 </footer>
 
-<script>
-// Scroll reveal
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    }
-  });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-</script>
+</div>
 </body>
 </html>
