@@ -2,430 +2,207 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>北邙一穗</title>
-<meta name="description" content="北邙无闲土，麦田有故人。">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>北邙一穗 · 战国历史短视频与游戏</title>
+<meta name="description" content="北邙一穗：用 AI 做战国历史短视频和战国题材小游戏。《横扫六国》可在线试玩。">
+<meta name="theme-color" content="#1A1513">
 <style>
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-:root {
-  --bg: #f5f0e8;
-  --card: #faf7f2;
-  --fg: #2c2820;
-  --dim: #5a544a;
-  --accent: #9a7b2d;
-  --line: #e0d8c8;
-  --line-dark: #c8bfb0;
+:root{
+  --lacquer:#1A1513;   /* 漆黑 */
+  --lacquer2:#241C18;
+  --cinnabar:#B3332A;  /* 朱砂 */
+  --bamboo:#D8BE86;    /* 竹黄 */
+  --bamboo-d:#B89A5E;
+  --bronze:#4E6B5C;    /* 青铜锈 */
+  --silk:#EDE2C8;      /* 绢 */
+  --serif:"Songti SC","STSong","Noto Serif SC","Source Han Serif SC","SimSun",serif;
+  --kai:"Kaiti SC","STKaiti","KaiTi","Noto Serif SC",serif;
 }
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--serif);background:var(--lacquer);color:var(--silk);line-height:1.85;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--bamboo);outline-offset:3px}
+.wrap{max-width:1060px;margin:0 auto;padding:0 24px}
 
-body {
-  font-family: Georgia, 'Noto Serif SC', 'Songti SC', serif;
-  background: var(--bg);
-  color: var(--fg);
-  line-height: 1.75;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+/* 漆器回纹边 */
+.band{height:14px;background:
+  repeating-linear-gradient(90deg,var(--cinnabar) 0 14px,transparent 14px 18px,var(--cinnabar) 18px 22px,transparent 22px 28px);opacity:.85}
+
+nav{display:flex;justify-content:space-between;align-items:center;padding:22px 0}
+nav .seal{display:inline-grid;place-items:center;width:46px;height:46px;background:var(--cinnabar);color:var(--silk);font-family:var(--kai);font-size:15px;line-height:1.1;text-align:center;border-radius:4px;text-decoration:none;letter-spacing:.05em}
+nav ul{display:flex;gap:26px;list-style:none;font-size:15px}
+nav ul a{text-decoration:none;color:var(--bamboo)}
+nav ul a:hover{color:var(--silk)}
+
+/* 首屏：竖排大字 + 竹简 */
+.hero{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center;padding:40px 0 70px}
+.hero .intro .kicker{color:var(--cinnabar);font-size:14px;letter-spacing:.3em}
+.hero h1{font-family:var(--kai);font-weight:400;font-size:clamp(46px,8vw,96px);line-height:1.15;margin:12px 0 22px;color:var(--silk)}
+.hero h1 em{font-style:normal;color:var(--cinnabar)}
+.hero p{font-size:17px;max-width:30em;color:rgba(237,226,200,.85)}
+.slips{display:flex;flex-direction:row-reverse;gap:6px;height:400px}
+.slip{
+  writing-mode:vertical-rl;text-orientation:upright;
+  width:44px;padding:18px 0;font-family:var(--kai);font-size:20px;letter-spacing:.32em;
+  color:#2B1F14;
+  background:linear-gradient(90deg,var(--bamboo-d),var(--bamboo) 30%,var(--bamboo) 70%,var(--bamboo-d));
+  border-radius:3px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.15);
+  position:relative;text-align:center;
 }
+.slip::before,.slip::after{content:"";position:absolute;left:-3px;right:-3px;height:3px;background:#6E4E2A}
+.slip::before{top:22%}.slip::after{bottom:22%}
+.slip.red{color:var(--cinnabar)}
+.slip:nth-child(2){margin-top:26px}.slip:nth-child(4){margin-top:14px}
 
-/* 流动背景 - 纯CSS实现 */
-.flow-bg {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  z-index: -1;
-  overflow: hidden;
+section{padding:60px 0}
+h2{font-family:var(--kai);font-weight:400;font-size:34px;display:flex;align-items:center;gap:16px;margin-bottom:10px}
+h2::before{content:"";width:28px;height:28px;background:var(--cinnabar);border-radius:3px;flex:none}
+section > p.sub{color:rgba(237,226,200,.75);margin-bottom:30px;max-width:38em}
+
+/* 游戏 */
+.game{display:grid;grid-template-columns:280px 1fr;gap:40px;background:var(--lacquer2);border:1px solid rgba(216,190,134,.25);padding:28px;border-radius:4px}
+.game .shot{aspect-ratio:9/16;overflow:hidden;border-radius:3px;box-shadow:0 0 0 6px var(--lacquer),0 0 0 7px var(--cinnabar)}
+.game img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+.game h3{font-family:var(--kai);font-weight:400;font-size:40px;color:var(--silk);line-height:1.2}
+.game .meta{color:var(--bamboo);font-size:14px;letter-spacing:.1em;margin:6px 0 18px}
+.game p{margin-bottom:14px}
+.heroes{display:flex;gap:18px;margin:20px 0 26px}
+.heroes figure{display:flex;gap:12px;align-items:center;background:rgba(0,0,0,.25);padding:8px 14px 8px 8px;border-radius:4px}
+.heroes img{width:64px;height:64px;object-fit:contain}
+.heroes figcaption{font-size:14px;line-height:1.5}
+.heroes b{font-family:var(--kai);font-size:19px;font-weight:400;color:var(--silk);display:block}
+.btn{display:inline-block;background:var(--cinnabar);color:var(--silk);text-decoration:none;font-size:18px;padding:12px 30px;border-radius:3px;letter-spacing:.2em;font-family:var(--kai)}
+.btn:hover{background:#C9443A}
+.alt{margin-left:18px;color:var(--bamboo);font-size:14px}
+.note{font-size:13px;color:rgba(237,226,200,.55);margin-top:16px}
+
+/* 在做的事 */
+.works{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.work{border-top:3px solid var(--bronze);padding-top:16px}
+.work h3{font-family:var(--kai);font-weight:400;font-size:23px;color:var(--bamboo);margin-bottom:6px}
+.work p{font-size:15px;color:rgba(237,226,200,.82)}
+
+/* 第二款游戏：横版卡片 */
+.game2{display:grid;grid-template-columns:280px 1fr;gap:40px;margin-top:26px;padding:28px;border:1px solid rgba(216,190,134,.25);border-radius:4px}
+.game2 .shot{aspect-ratio:16/9;overflow:hidden;border-radius:3px;box-shadow:0 0 0 6px var(--lacquer),0 0 0 7px var(--bamboo-d)}
+.game2 img{width:100%;height:100%;object-fit:cover;display:block}
+.game2 h3{font-family:var(--kai);font-weight:400;font-size:32px;color:var(--silk);line-height:1.2}
+.game2 .meta{color:var(--bamboo);font-size:14px;letter-spacing:.1em;margin:6px 0 14px}
+.game2 p{margin-bottom:18px}
+.game2 .btn{background:transparent;border:1px solid var(--cinnabar);color:var(--silk)}
+.game2 .btn:hover{background:var(--cinnabar)}
+/* 关于 */
+.about{display:grid;grid-template-columns:120px 1fr;gap:30px;align-items:start}
+.about img{width:120px;height:120px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 3px var(--lacquer),0 0 0 4px var(--bamboo-d)}
+.about .motto{font-family:var(--kai);font-size:26px;color:var(--bamboo);margin-bottom:10px}
+.about p{color:rgba(237,226,200,.85);max-width:36em}
+.about .links{display:flex;gap:18px;margin-top:16px;font-size:15px}
+.about .links a{color:var(--bamboo)}
+.about .links a:hover{color:var(--silk)}
+footer{border-top:1px solid rgba(216,190,134,.2);margin-top:30px;padding:36px 0 52px;font-size:13px;color:rgba(237,226,200,.6);display:flex;gap:22px;flex-wrap:wrap;justify-content:space-between}
+footer a{text-decoration:none}
+footer a:hover{color:var(--bamboo)}
+
+@media (max-width:820px){
+  .hero{grid-template-columns:1fr}
+  .slips{height:300px;justify-content:center}
+  .slip{width:38px;font-size:17px}
+  .game{grid-template-columns:1fr;padding:20px}
+  .game .shot{max-width:260px}
+  .heroes{flex-direction:column}
+  .works{grid-template-columns:1fr}
+  .game2{grid-template-columns:1fr;padding:20px}
+  .about{grid-template-columns:1fr}
+  nav ul{gap:16px}
 }
-
-.flow-wave {
-  position: absolute;
-  width: 200%;
-  height: 200%;
-  top: -50%;
-  left: -50%;
-  background: 
-    radial-gradient(ellipse at 30% 40%, rgba(154,123,45,0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 70% 60%, rgba(138,128,112,0.06) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 80%, rgba(154,123,45,0.05) 0%, transparent 40%);
-  animation: flow 20s ease-in-out infinite;
-}
-
-.flow-wave:nth-child(2) {
-  animation-delay: -7s;
-  animation-duration: 25s;
-  opacity: 0.6;
-}
-
-.flow-wave:nth-child(3) {
-  animation-delay: -14s;
-  animation-duration: 30s;
-  opacity: 0.4;
-}
-
-@keyframes flow {
-  0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
-  25% { transform: translate(2%, 3%) rotate(1deg) scale(1.02); }
-  50% { transform: translate(-1%, 2%) rotate(-1deg) scale(0.98); }
-  75% { transform: translate(3%, -1%) rotate(0.5deg) scale(1.01); }
-}
-
-/* 麦浪线条 */
-.wheat-lines {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  z-index: -1;
-  opacity: 0.15;
-}
-
-.wheat-line {
-  position: absolute;
-  width: 200%;
-  height: 1px;
-  background: linear-gradient(90deg, 
-    transparent 0%, 
-    var(--accent) 20%, 
-    var(--accent) 80%, 
-    transparent 100%);
-  animation: wave 8s ease-in-out infinite;
-}
-
-.wheat-line:nth-child(1) { top: 20%; animation-delay: 0s; }
-.wheat-line:nth-child(2) { top: 35%; animation-delay: -2s; opacity: 0.7; }
-.wheat-line:nth-child(3) { top: 50%; animation-delay: -4s; opacity: 0.5; }
-.wheat-line:nth-child(4) { top: 65%; animation-delay: -1s; opacity: 0.8; }
-.wheat-line:nth-child(5) { top: 80%; animation-delay: -3s; opacity: 0.6; }
-
-@keyframes wave {
-  0%, 100% { transform: translateX(-5%) scaleY(1); opacity: 0.3; }
-  50% { transform: translateX(5%) scaleY(1.5); opacity: 0.8; }
-}
-
-.container {
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 0 1.5rem;
-  position: relative;
-  z-index: 1;
-}
-
-/* Header */
-header {
-  padding: 7rem 0 4rem;
-  position: relative;
-}
-
-header .avatar {
-  width: 88px;
-  height: 88px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 2rem;
-  display: block;
-  border: 3px solid var(--line);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  opacity: 0;
-  transform: translateY(20px);
-  animation: rise 1s ease 0.2s forwards;
-}
-
-header h1 {
-  font-size: 2.2rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  margin-bottom: 0.4rem;
-  color: var(--fg);
-  opacity: 0;
-  transform: translateY(20px);
-  animation: rise 1s ease 0.4s forwards;
-}
-
-header .bio {
-  font-size: 1.05rem;
-  color: var(--dim);
-  letter-spacing: 0.06em;
-  margin-bottom: 0.8rem;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: rise 1s ease 0.6s forwards;
-}
-
-header .role {
-  display: inline-block;
-  font-size: 0.78rem;
-  color: var(--accent);
-  letter-spacing: 0.25em;
-  padding: 0.3em 0;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  opacity: 0;
-  transform: translateY(20px);
-  animation: rise 1s ease 0.8s forwards;
-}
-
-@keyframes rise {
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Divider */
-hr {
-  border: none;
-  border-top: 1px solid var(--line);
-  opacity: 0;
-  animation: fadeIn 1s ease 1s forwards;
-}
-
-@keyframes fadeIn {
-  to { opacity: 1; }
-}
-
-/* Works */
-.works {
-  padding: 4rem 0;
-}
-
-.works h2 {
-  font-size: 0.75rem;
-  font-weight: 400;
-  color: var(--dim);
-  letter-spacing: 0.3em;
-  margin-bottom: 0.8rem;
-  opacity: 0;
-  animation: fadeIn 1s ease 1.2s forwards;
-}
-
-.works .works-sub {
-  font-size: 0.85rem;
-  color: var(--dim);
-  margin-bottom: 2.5rem;
-  opacity: 0;
-  animation: fadeIn 1s ease 1.4s forwards;
-}
-
-.work-card {
-  display: block;
-  text-decoration: none;
-  color: inherit;
-  background: var(--card);
-  border: 1px solid var(--line);
-  overflow: hidden;
-  transition: border-color 0.4s, box-shadow 0.4s, transform 0.4s;
-  margin-bottom: 2rem;
-  opacity: 0;
-  transform: translateY(30px);
-  animation: rise 1s ease 1.6s forwards;
-}
-
-.work-card:hover {
-  border-color: var(--line-dark);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-  transform: translateY(-4px);
-}
-
-.work-card img {
-  width: 100%;
-  aspect-ratio: 16/9;
-  object-fit: cover;
-  display: block;
-  filter: brightness(0.95) saturate(0.9);
-  transition: filter 0.5s, transform 0.5s;
-}
-
-.work-card:hover img {
-  filter: brightness(1) saturate(1);
-  transform: scale(1.02);
-}
-
-.work-card .work-body {
-  padding: 1.8rem;
-}
-
-.work-card .work-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  letter-spacing: 0.03em;
-}
-
-.work-card .work-title .status {
-  font-size: 0.68rem;
-  font-weight: 400;
-  color: var(--accent);
-  margin-left: 0.6rem;
-  letter-spacing: 0.15em;
-  border: 1px solid var(--accent);
-  padding: 0.15em 0.5em;
-  vertical-align: middle;
-  opacity: 0.8;
-}
-
-.work-card .work-desc {
-  font-size: 0.88rem;
-  color: var(--dim);
-  line-height: 1.8;
-  margin-bottom: 0.8rem;
-}
-
-.work-card .work-meta {
-  display: flex;
-  gap: 1rem;
-  font-size: 0.75rem;
-  color: var(--dim);
-  opacity: 0.7;
-  margin-bottom: 0.8rem;
-}
-
-.work-card .work-link {
-  display: inline-block;
-  font-size: 0.82rem;
-  color: var(--accent);
-  letter-spacing: 0.12em;
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.3s;
-}
-
-.work-card:hover .work-link {
-  border-bottom-color: var(--accent);
-}
-
-/* About */
-.about {
-  padding: 3rem 0;
-  opacity: 0;
-  animation: fadeIn 1s ease 2s forwards;
-}
-
-.about p {
-  font-size: 0.92rem;
-  color: var(--dim);
-  line-height: 2;
-  max-width: 480px;
-}
-
-/* Contact */
-.contact {
-  padding: 3rem 0 6rem;
-  opacity: 0;
-  animation: fadeIn 1s ease 2.2s forwards;
-}
-
-.contact h2 {
-  font-size: 0.75rem;
-  font-weight: 400;
-  color: var(--dim);
-  letter-spacing: 0.3em;
-  margin-bottom: 1.5rem;
-}
-
-.contact a {
-  color: var(--fg);
-  text-decoration: none;
-  font-size: 0.9rem;
-  margin-right: 2.5rem;
-  border-bottom: 1px solid var(--line);
-  padding-bottom: 2px;
-  transition: border-color 0.3s, color 0.3s;
-}
-
-.contact a:hover {
-  border-color: var(--fg);
-  color: var(--accent);
-}
-
-/* Footer */
-footer {
-  padding: 2rem 0;
-  font-size: 0.7rem;
-  color: #b0a890;
-  letter-spacing: 0.12em;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  opacity: 0;
-  animation: fadeIn 1s ease 2.4s forwards;
-}
-
-footer .footer-note {
-  opacity: 0.6;
-}
-
-@media (max-width: 600px) {
-  header { padding: 4.5rem 0 3rem; }
-  header h1 { font-size: 1.8rem; }
-  .works { padding: 3rem 0; }
-  footer { flex-direction: column; gap: 0.5rem; text-align: center; }
-}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
 </style>
-<script async src="https://stats.puck-muling.top/script.js" data-website-id="63c0fb58-53c8-4d65-b989-269f049699d6"></script>
+<script defer src="https://stats.puck-muling.top/script.js" data-website-id="63c0fb58-53c8-4d65-b989-269f049699d6"></script>
 </head>
 <body>
+<div class="band" aria-hidden="true"></div>
+<div class="wrap">
+  <nav aria-label="主导航">
+    <a class="seal" href="/" aria-label="北邙一穗 首页">北邙<br>一穗</a>
+    <ul>
+      <li><a href="#game">游戏</a></li>
+      <li><a href="#work">在做的事</a></li>
+      <li><a href="#about">关于</a></li>
+      <li><a href="https://puck-muling.github.io/">主站</a></li>
+    </ul>
+  </nav>
 
-<!-- 流动背景 -->
-<div class="flow-bg">
-  <div class="flow-wave"></div>
-  <div class="flow-wave"></div>
-  <div class="flow-wave"></div>
-</div>
-
-<!-- 麦浪线条 -->
-<div class="wheat-lines">
-  <div class="wheat-line"></div>
-  <div class="wheat-line"></div>
-  <div class="wheat-line"></div>
-  <div class="wheat-line"></div>
-  <div class="wheat-line"></div>
-</div>
-
-<div class="container">
-
-<header>
-  <img class="avatar" src="avatar.jpg" alt="北邙一穗">
-  <h1>北邙一穗</h1>
-  <p class="bio">北邙无闲土，麦田有故人。</p>
-  <span class="role">一个热爱历史的人</span>
-</header>
-
-<hr>
-
-<section class="works">
-  <h2>作品</h2>
-  <p class="works-sub">一个人做的游戏，慢慢做，慢慢改。</p>
-
-  <a class="work-card" href="https://beimangyisui.github.io/qin-mie-liu-guo-demo/" target="_blank">
-    <img src="cover-qin.webp" alt="秦灭六国">
-    <div class="work-body">
-      <div class="work-title">秦灭六国 <span class="status">DEMO</span></div>
-      <p class="work-desc">历史已定，抉择在你。扮演秦军秘密行动头领北芒，与医者小满、剑士青翎共历战国末年。无等级、无装备、无刷怪——你决定的是方法与代价。</p>
-      <div class="work-meta">
-        <span>叙事 RPG</span>
-        <span>约 70 分钟</span>
-        <span>浏览器即玩</span>
-      </div>
-      <span class="work-link">开始试玩 →</span>
+  <header class="hero">
+    <div class="intro">
+      <div class="kicker">战国 · 短视频 · 游戏</div>
+      <h1>把战国<br>讲成<em>好看</em>的故事</h1>
+      <p>我是北邙一穗。用 AI 出图、出视频、配音，把七国争雄的人和事做成短视频；也把战国名将做进小游戏里，让人上手就能打一局。</p>
     </div>
-  </a>
+    <div class="slips" aria-hidden="true">
+      <div class="slip">秦　齐　楚</div>
+      <div class="slip red">长平之战</div>
+      <div class="slip">燕　赵　魏　韩</div>
+      <div class="slip">白起　孙膑</div>
+      <div class="slip red">纸上谈兵</div>
+    </div>
+  </header>
 
-  <!-- 未来作品加在这里 -->
-</section>
+  <section id="game" aria-labelledby="game-h">
+    <h2 id="game-h">在线试玩</h2>
+    <p class="sub">两款战国游戏，浏览器打开就能玩。</p>
+    <article class="game">
+      <div class="shot"><img src="img/cover-hengsao-liuguo.jpg" alt="横扫六国游戏首页：白起与孙膑站在长平战场前" width="480" height="1039"></div>
+      <div>
+        <h3>横扫六国</h3>
+        <div class="meta">一人破万军 · 约 2 分钟一局</div>
+        <p>长平战场，赵括的兵书变出成群纸甲兵。你手指拖着名将走位，刀枪自动砍杀；升级三选一搭配技能，去吕不韦的货栈买田单兵符，把火牛冲阵进化成即墨火牛阵，最后迎战骑着竹简冲来的赵括。打完生成一张军功战报卡。</p>
+        <div class="heroes">
+          <figure><img src="img/portrait_baiqi.png" alt="白起头像" width="64" height="64"><figcaption><b>白起</b>长戟横扫，杀敌越多越强</figcaption></figure>
+          <figure><img src="img/portrait_sunbin.png" alt="孙膑头像" width="64" height="64"><figcaption><b>孙膑</b>弩箭连射，八卦阵定身</figcaption></figure>
+        </div>
+        <a class="btn" href="https://beimangyisui.github.io/hengsao-liuguo/">出征</a><a class="alt" href="https://github.com/BeiMangYiSui/hengsao-liuguo">GitHub 源码</a>
+        <p class="note">戏说战国，非史实。手机竖屏体验最好；电脑上用 WASD 或方向键移动，空格放大招。</p>
+      </div>
+    </article>
+    <article class="game2">
+      <div class="shot"><img src="img/cover-qin.jpg" alt="秦灭六国 DEMO：月夜下三人站在高地上，远眺燃烧的城池" loading="lazy" width="560" height="315"></div>
+      <div>
+        <h3>秦灭六国 DEMO</h3>
+        <div class="meta">叙事 RPG · 约 70 分钟</div>
+        <p>历史已定，抉择在你。扮演秦军秘密行动头领北芒，与医者小满、剑士青翎共历战国末年。没有等级、装备和刷怪，你决定的是方法与代价。</p>
+        <a class="btn" href="https://beimangyisui.github.io/qin-mie-liu-guo-demo/">开始试玩</a><a class="alt" href="https://github.com/BeiMangYiSui/qin-mie-liu-guo-demo">GitHub 源码</a>
+      </div>
+    </article>
+  </section>
 
-<hr>
+  <section id="work" aria-labelledby="work-h">
+    <h2 id="work-h">在做的事</h2>
+    <p class="sub">题材只做战国，手段全靠 AI。</p>
+    <div class="works">
+      <div class="work"><h3>战国历史短视频</h3><p>名将、谋士、合纵连横。从人物立绘、分镜到配音配乐，做成几分钟能看完的故事。</p></div>
+      <div class="work"><h3>战国题材游戏</h3><p>把史书里的名场面变成玩法：长平的纸上谈兵、即墨的火牛阵，都能亲手打一遍。</p></div>
+      <div class="work"><h3>AI 工具分享</h3><p>古装人物怎么出图不撞脸、战国场景怎么写提示词，做历史内容踩过的坑都记下来。</p></div>
+    </div>
+  </section>
 
-<section class="about">
-  <p>北邙一穗，取"北邙无闲土"之意。白天写代码，晚上写故事。相信好的游戏不需要堆砌系统，一个让人记住的选择，比一百个装备栏更有分量。</p>
-</section>
+  <section id="about" aria-labelledby="about-h">
+    <h2 id="about-h">关于</h2>
+    <div class="about">
+      <img src="img/avatar.jpg" alt="一片麦田里的麦穗" width="120" height="120">
+      <div>
+        <div class="motto">北邙无闲土，麦田有故人。</div>
+        <p>北邙一穗，取“北邙无闲土”之意。白天写代码，晚上写故事。相信好的游戏不需要堆砌系统，一个让人记住的选择，比一百个装备栏更有分量。</p>
+        <div class="links"><a href="https://t.me/BEIMANGYISUI">Telegram</a><a href="https://github.com/BeiMangYiSui">GitHub</a></div>
+      </div>
+    </div>
+  </section>
 
-<hr>
-
-<section class="contact">
-  <h2>找到我</h2>
-  <a href="https://t.me/BEIMANGYISUI" target="_blank" rel="noopener">Telegram</a>
-  <a href="https://github.com/BeiMangYiSui" target="_blank" rel="noopener">GitHub</a>
-</section>
-
-<footer>
-  <span>© 2026 北邙一穗</span>
-</footer>
-
+  <footer>
+    <span>© 2026 北邙一穗</span>
+    <a href="https://github.com/BeiMangYiSui">github.com/BeiMangYiSui</a>
+    <a href="https://puck-muling.github.io/">Muling 主站</a>
+  </footer>
 </div>
-
 </body>
 </html>
