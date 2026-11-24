@@ -28,11 +28,14 @@
   --wheat-deep:#8A5A0B; /* 深麦金：小号金色文字 */
   --sprout:#3E6A27;  /* 青苗绿：标签 */
   --cinnabar:#B23A2A;/* 印泥朱：只给印章 */
+  --title:#A8741C;   /* 首屏题款：麦金，取前景麦穗 */
+  --title-shadow:0 1px 16px rgba(255,250,235,.85);
   --line:rgba(34,48,31,.14);
   --kai:"Kaiti SC","STKaiti","KaiTi","BiauKai","Noto Serif SC",serif;
   --serif:"Songti SC","STSong","Noto Serif SC","Source Han Serif SC","SimSun",serif;
   --ear:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 40'%3E%3Cg fill='%23D69B2D'%3E%3Cpath d='M10 40V12' stroke='%23D69B2D' stroke-width='1.4' fill='none'/%3E%3Cellipse cx='10' cy='5' rx='2.2' ry='4.2'/%3E%3Cellipse cx='6.6' cy='11' rx='2.1' ry='4' transform='rotate(-28 6.6 11)'/%3E%3Cellipse cx='13.4' cy='11' rx='2.1' ry='4' transform='rotate(28 13.4 11)'/%3E%3Cellipse cx='6.6' cy='18' rx='2.1' ry='4' transform='rotate(-28 6.6 18)'/%3E%3Cellipse cx='13.4' cy='18' rx='2.1' ry='4' transform='rotate(28 13.4 18)'/%3E%3Cellipse cx='6.8' cy='25' rx='2' ry='3.7' transform='rotate(-28 6.8 25)'/%3E%3Cellipse cx='13.2' cy='25' rx='2' ry='3.7' transform='rotate(28 13.2 25)'/%3E%3C/g%3E%3C/svg%3E");
 }
+@font-face{font-family:"LongCang-BM";src:url(fonts/longcang-beimang.woff2) format("woff2");font-display:swap;unicode-range:U+4E00,U+5317,U+7A57,U+9099}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;scroll-padding-top:84px}
 body{background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:17px;line-height:1.95;-webkit-font-smoothing:antialiased}
@@ -64,7 +67,8 @@ nav ul a:hover{color:var(--ink)}
 .hello{font-family:var(--kai);font-size:clamp(30px,3.6vw,48px);line-height:1.45;margin:18px 0 18px;color:var(--ink)}
 .hero p{color:#3A4636;font-size:16.5px}
 .hero .acts{display:flex;gap:22px;align-items:center;margin-top:34px}
-.vtitle{writing-mode:vertical-rl;font-family:var(--kai);font-weight:400;font-size:clamp(72px,10vw,150px);line-height:1;letter-spacing:.12em;color:var(--ink);text-shadow:0 2px 30px rgba(250,246,234,.8)}
+.vtitle{writing-mode:vertical-rl;font-family:"LongCang-BM",var(--kai);font-weight:400;font-size:clamp(56px,6.2vw,96px);line-height:1;letter-spacing:.06em;color:var(--title);text-shadow:var(--title-shadow)}
+.vtitle::after{content:"一穗";writing-mode:vertical-rl;display:inline-grid;place-items:center;vertical-align:middle;margin-inline-start:.35em;width:40px;height:40px;background:var(--cinnabar);color:#FBF3E4;font-family:var(--kai);font-size:15px;line-height:1.05;letter-spacing:0;border-radius:3px;text-shadow:none;box-shadow:inset 0 0 0 2px rgba(255,255,255,.2)}
 .btn{display:inline-block;background:var(--wheat);color:var(--ink);text-decoration:none;font-family:var(--kai);font-size:18px;letter-spacing:.3em;padding:11px 26px 11px 32px;border-radius:2px;box-shadow:0 6px 18px -8px rgba(138,90,11,.6);transition:background .25s,transform .25s}
 .btn:hover{background:#E2AA3E;transform:translateY(-2px)}
 .ghost{color:var(--ink);font-size:14px;letter-spacing:.12em;text-decoration:none;border-bottom:1px solid rgba(34,48,31,.35);padding-bottom:2px}
@@ -139,9 +143,9 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
   .hero::after{background:
     linear-gradient(180deg,rgba(250,246,234,.78) 0%,rgba(250,246,234,.55) 45%,rgba(250,246,234,0) 70%),
     linear-gradient(180deg,rgba(250,246,234,0) 85%,var(--paper) 100%)}
-  .hero > img{object-position:58% 70%}
+  .hero > img{object-position:84% 72%}
   .kicker{letter-spacing:.18em}
-  .vtitle{writing-mode:horizontal-tb;font-size:64px;letter-spacing:.14em;white-space:nowrap}
+  .vtitle{writing-mode:horizontal-tb;font-size:60px;letter-spacing:.14em;white-space:nowrap}
   .sec-h{flex-wrap:wrap;gap:8px 18px;margin-bottom:44px}
   .sec-h::after{display:none}
   .sec-h span{letter-spacing:.25em}
@@ -200,7 +204,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
       <div class="sec-h"><h2 id="about-h">关于我</h2><span>北邙无闲土 · 麦田有故人</span></div>
       <div class="about reveal">
         <div class="portrait">
-          <div class="ring"><img src="img/avatar-moon.webp" alt="月夜里北邙山坡上的一穗麦" width="720" height="720"></div>
+          <div class="ring"><img src="img/avatar-day.webp" alt="晴空下一穗饱满的金色麦穗" width="720" height="720"></div>
           <div class="name" aria-hidden="true">北邙一穗</div>
         </div>
         <div>
